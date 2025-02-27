@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="患者ID" prop="patientId">
+      <el-form-item label="用户ID" prop="uId">
         <el-input
-          v-model="queryParams.patientId"
-          placeholder="请输入患者ID"
+          v-model="queryParams.uId"
+          placeholder="请输入用户ID"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -71,11 +71,11 @@
 
     <el-table v-loading="loading" :data="oximeterList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="患者名称" align="center" prop="patientName" />
+      <el-table-column label="测试时间" align="center" prop="createTime" />
+      <el-table-column label="用户名称" align="center" prop="userName" />
       <el-table-column label="血氧饱和度" align="center" prop="spo2" />
       <el-table-column label="脉率" align="center" prop="pr" />
       <el-table-column label="血压" align="center" prop="pi" />
-      <el-table-column label="测试时间" align="center" prop="createTime" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -106,12 +106,12 @@
 
     <!-- 添加或修改血氧仪对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
-      <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="患者ID" prop="patientId">
-          <el-input v-model="form.patientId" placeholder="请输入患者ID" />
+      <el-form ref="form" :model="form" :rules="rules" label-width="100px">
+        <el-form-item label="用户ID" prop="uId">
+          <el-input v-model="form.uId" placeholder="请输入患者ID" />
         </el-form-item>
-        <el-form-item label="患者" prop="patientName">
-          <el-input v-model="form.patientName" placeholder="请输入患者" />
+        <el-form-item label="用户名" prop="userName">
+          <el-input v-model="form.userName" placeholder="请输入用户名" />
         </el-form-item>
         <el-form-item label="血氧饱和度" prop="spo2">
           <el-input v-model="form.spo2" placeholder="请输入血氧饱和度" />
@@ -160,14 +160,14 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        patientId: null,
+        uId: null,
         createTime: null
       },
       // 表单参数
       form: {},
       // 表单校验
       rules: {
-        patientId: [
+        uId: [
           { required: true, message: "患者ID不能为空", trigger: "blur" }
         ],
         spo2: [
@@ -207,8 +207,8 @@ export default {
     reset() {
       this.form = {
         oximeterId: null,
-        patientId: null,
-        patientName: null,
+        uId: null,
+        userName: null,
         spo2: null,
         pr: null,
         pi: null,

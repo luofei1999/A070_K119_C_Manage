@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="患者名称" prop="patientName">
+      <el-form-item label="用户名" prop="userName">
         <el-input
-          v-model="queryParams.patientName"
-          placeholder="请输入患者名称"
+          v-model="queryParams.userName"
+          placeholder="请输入用户名"
           clearable
           @keyup.enter.native="handleQuery"
         />
@@ -89,7 +89,7 @@
 
     <el-table v-loading="loading" :data="treatment_recordList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
-      <el-table-column label="患者名称" align="center" prop="patientName" />
+      <el-table-column label="用户名" align="center" prop="userName" />
       <el-table-column label="治疗方案" align="center" prop="treatmentPlan">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.treatment_plan" :value="scope.row.treatmentPlan"/>
@@ -141,11 +141,11 @@
     <!-- 添加或修改治疗记录对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="患者ID" prop="patientId">
-          <el-input v-model="form.patientId" placeholder="请输入患者ID" />
+        <el-form-item label="用户ID" prop="uId">
+          <el-input v-model="form.uId" placeholder="请输入用户ID" />
         </el-form-item>
-        <el-form-item label="患者名称" prop="patientName">
-          <el-input v-model="form.patientName" placeholder="请输入患者名称" />
+        <el-form-item label="用户名" prop="userName">
+          <el-input v-model="form.userName" placeholder="请输入用户名" />
         </el-form-item>
         <el-form-item label="治疗方案" prop="treatmentPlan">
           <el-select v-model="form.treatmentPlan" placeholder="请选择治疗方案">
@@ -227,7 +227,7 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        patientName: null,
+        userName: null,
         treatmentPlan: null,
         treatmentDevice: null,
         treatmentLocation: null
@@ -261,7 +261,7 @@ export default {
     reset() {
       this.form = {
         id: null,
-        patientName: null,
+        userName: null,
         treatmentPlan: null,
         treatmentDuration: null,
         treatmentStartTime: null,
