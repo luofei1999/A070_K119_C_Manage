@@ -97,14 +97,14 @@
       </el-table-column>
       <el-table-column label="治疗时长" align="center" prop="treatmentDuration" />
       <el-table-column label="开始时间" align="center" prop="treatmentStartTime" width="180">
-        <template slot-scope="scope">
+        <!-- <template slot-scope="scope">
           <span>{{ parseTime(scope.row.treatmentStartTime, '{y}-{m}-{d}') }}</span>
-        </template>
+        </template> -->
       </el-table-column>
       <el-table-column label="结束时间" align="center" prop="treatmentEndTime" width="180">
-        <template slot-scope="scope">
+        <!-- <template slot-scope="scope">
           <span>{{ parseTime(scope.row.treatmentEndTime, '{y}-{m}-{d}') }}</span>
-        </template>
+        </template> -->
       </el-table-column>
       <el-table-column label="治疗能量" align="center" prop="treatmentEnergy" />
       <el-table-column label="总能量输出" align="center" prop="totalEnergyOutput" />
@@ -164,7 +164,7 @@
           <el-date-picker clearable
             v-model="form.treatmentStartTime"
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="请选择开始时间">
           </el-date-picker>
         </el-form-item>
@@ -172,7 +172,7 @@
           <el-date-picker clearable
             v-model="form.treatmentEndTime"
             type="date"
-            value-format="yyyy-MM-dd"
+            value-format="yyyy-MM-dd HH:mm:ss"
             placeholder="请选择结束时间">
           </el-date-picker>
         </el-form-item>
