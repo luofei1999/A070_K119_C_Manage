@@ -44,6 +44,19 @@
       <el-table-column label="治疗ID" align="center" prop="treatmentId" />
       <el-table-column label="用户ID" align="center" prop="userId" />
       <el-table-column label="用户名" align="center" prop="userName" />
+      <el-table-column label="标识" align="center" prop="isTreatmentAfter" >
+        <template slot-scope="scope">
+
+        <div>
+          <div v-if="scope.row.isTreatmentAfter == '0'" >
+            治疗前
+          </div>
+          <div v-else>
+            治疗后
+          </div>
+        </div>
+        </template>
+      </el-table-column>
       <!-- <el-table-column label="文件名称" align="center" prop="name" :show-overflow-tooltip="true" />
       <el-table-column label="访问路径" align="center" prop="path" :show-overflow-tooltip="true" /> -->
 
