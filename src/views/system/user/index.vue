@@ -1,9 +1,9 @@
 <template>
   <div class="app-container">
     <el-row :gutter="20">
-      <splitpanes :horizontal="this.$store.getters.device === 'mobile'" class="default-theme">
+      <splitpanes  :horizontal="this.$store.getters.device === 'mobile'" class="default-theme">
         <!--部门数据-->
-        <pane size="16">
+        <pane size="16" style="display: none;">
           <el-col>
             <div class="head-container">
               <el-input v-model="deptName" placeholder="请输入部门名称" clearable size="small" prefix-icon="el-icon-search"
@@ -16,8 +16,8 @@
             </div>
           </el-col>
         </pane>
-        <!--用户数据-->
-        <pane size="84">
+        <!--用户数据 84-->
+        <pane size="100">
           <el-col>
             <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch"
               label-width="68px">

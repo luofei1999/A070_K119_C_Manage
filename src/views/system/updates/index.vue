@@ -9,9 +9,6 @@
         <el-input v-model="queryParams.versionName" placeholder="请输入版本名称" clearable @keyup.enter.native="handleQuery" />
       </el-form-item>
 
-      <el-form-item label="MD5" prop="md5">
-        <el-input v-model="queryParams.md5" placeholder="请输入文件 MD5 值" clearable @keyup.enter.native="handleQuery" />
-      </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
         <el-button icon="el-icon-refresh" size="mini" @click="resetQuery">重置</el-button>
@@ -43,14 +40,12 @@
       <el-table-column label="版本号" align="center" prop="versionCode" />
       <el-table-column label="版本名称" align="center" prop="versionName" />
       <el-table-column label="更新类型" align="center" prop="updateType">
-              <template slot-scope="scope">
-                <dict-tag :options="dict.type.update_type" :value="scope.row.updateType"/>
-              </template>
-            </el-table-column>
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.update_type" :value="scope.row.updateType" />
+        </template>
+      </el-table-column>
       <el-table-column label="更新描述" align="center" prop="updateDesc" />
-      <el-table-column label="下载地址" align="center" prop="apkUrl" />
-      <el-table-column label="文件大小" align="center" prop="apkSize" />
-      <el-table-column label="MD5" align="center" prop="md5" />
+      <el-table-column label="Apk" align="center" prop="apkUrl" />
       <el-table-column label="创建时间" align="center" prop="createTime" width="180">
       </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
@@ -69,36 +64,23 @@
     <!-- 添加或修改应用更新对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="应用名称" prop="appName">
-          <el-input v-model="form.appName" placeholder="请输入应用名称" />
-        </el-form-item>
         <el-form-item label="版本号" prop="versionCode">
           <el-input v-model="form.versionCode" placeholder="请输入版本号" />
         </el-form-item>
         <el-form-item label="版本名称" prop="versionName">
           <el-input v-model="form.versionName" placeholder="请输入版本名称" />
         </el-form-item>
-<el-form-item label="更新类型" prop="updateType">
+        <el-form-item label="更新类型" prop="updateType">
           <el-select v-model="form.updateType" placeholder="请选择更新类型">
-            <el-option
-              v-for="dict in dict.type.update_type"
-              :key="dict.value"
-              :label="dict.label"
-              :value="parseInt(dict.value)"
-            ></el-option>
+            <el-option v-for="dict in dict.type.update_type" :key="dict.value" :label="dict.label"
+              :value="parseInt(dict.value)"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="更新描述" prop="updateDesc">
           <el-input v-model="form.updateDesc" type="textarea" placeholder="请输入内容" />
         </el-form-item>
-        <el-form-item label="下载地址" prop="apkUrl">
-          <el-input v-model="form.apkUrl" placeholder="请输入下载地址" />
-        </el-form-item>
-        <el-form-item label="文件大小" prop="apkSize">
-          <el-input v-model="form.apkSize" placeholder="请输入文件大小" />
-        </el-form-item>
-        <el-form-item label="MD5" prop="md5">
-          <el-input v-model="form.md5" placeholder="请输入 MD5 值" />
+        <el-form-item label="APK" prop="apkUrl">
+          <apk-upload :fileSize="200" :fileType="['apk']" v-model="form.apkUrl" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -150,17 +132,15 @@
           versionName: null,
           updateDesc: null,
           apkUrl: null,
-          apkSize: null,
-          md5: null,
         },
         // 更新类型
         updateTypeList: [{
           value: null,
           label: '全部'
-        },{
+        }, {
           value: 0,
           label: '可选更新'
-        },{
+        }, {
           value: 1,
           label: '强制更新'
         }],
@@ -168,11 +148,6 @@
         form: {},
         // 表单校验
         rules: {
-          appName: [{
-            required: true,
-            message: "应用名称不能为空",
-            trigger: "blur"
-          }],
           versionCode: [{
             required: true,
             message: "版本号不能为空",
@@ -190,19 +165,10 @@
           }],
           apkUrl: [{
             required: true,
-            message: "下载地址不能为空",
+            message: "apk不能为空",
             trigger: "blur"
           }],
-          apkSize: [{
-            required: true,
-            message: "文件大小不能为空",
-            trigger: "blur"
-          }],
-          md5: [{
-            required: true,
-            message: "MD5 值不能为空",
-            trigger: "blur"
-          }],
+
         }
       };
     },
@@ -234,8 +200,6 @@
           updateDesc: null,
           updateType: 1,
           apkUrl: null,
-          apkSize: null,
-          md5: null,
           createTime: null
         };
         this.resetForm("form");
