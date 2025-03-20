@@ -3,7 +3,7 @@
     <el-row :gutter="20">
       <splitpanes  :horizontal="this.$store.getters.device === 'mobile'" class="default-theme">
         <!--部门数据-->
-        <pane size="16" style="display: none;">
+        <pane size="16" style="">
           <el-col>
             <div class="head-container">
               <el-input v-model="deptName" placeholder="请输入部门名称" clearable size="small" prefix-icon="el-icon-search"
@@ -97,12 +97,6 @@
                 :show-overflow-tooltip="true" />
               <el-table-column label="年龄" align="center" key="age" prop="age" v-if="columns[8].visible"
                 :show-overflow-tooltip="true" />
-              <el-table-column label="皮肤类型" align="center" key="skinType" prop="skinType" v-if="columns[9].visible"
-                :show-overflow-tooltip="true" />
-              <el-table-column label="过敏史" align="center" key="historyOfSensitivity" prop="historyOfSensitivity"
-                v-if="columns[10].visible" :show-overflow-tooltip="true" />
-              <el-table-column label="疾病史" align="center" key="pastMedicalHistory" prop="pastMedicalHistory"
-                v-if="columns[11].visible" :show-overflow-tooltip="true" />
 
               <el-table-column label="操作" align="center" width="160" class-name="small-padding fixed-width">
                 <template slot-scope="scope" v-if="scope.row.userId !== 1">
@@ -209,20 +203,6 @@
 
         </el-row>
 
-
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="过敏史" prop="historyOfSensitivity">
-              <el-input v-model="form.historyOfSensitivity" placeholder="请输入过敏史" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="12">
-            <el-form-item label="疾病史" prop="pastMedicalHistory">
-              <el-input v-model="form.pastMedicalHistory" placeholder="请输入疾病史" />
-            </el-form-item>
-          </el-col>
-        </el-row>
-
         <el-row>
           <el-col :span="12">
             <el-form-item label="岗位">
@@ -237,17 +217,6 @@
               <el-select v-model="form.roleIds" multiple placeholder="请选择角色">
                 <el-option v-for="item in roleOptions" :key="item.roleId" :label="item.roleName" :value="item.roleId"
                   :disabled="item.status == 1"></el-option>
-              </el-select>
-            </el-form-item>
-          </el-col>
-        </el-row>
-
-        <el-row>
-          <el-col :span="12">
-            <el-form-item label="皮肤类型">
-              <el-select v-model="form.skinType" placeholder="请选择性别">
-                <el-option v-for="dict in dict.type.skin_type" :key="dict.value" :label="dict.label"
-                  :value="dict.value"></el-option>
               </el-select>
             </el-form-item>
           </el-col>
@@ -315,7 +284,7 @@
 
   export default {
     name: "User",
-    dicts: ['sys_normal_disable', 'sys_user_sex', "skin_type"],
+    dicts: ['sys_normal_disable', 'sys_user_sex'],
     components: {
       Treeselect,
       Splitpanes,
@@ -431,20 +400,6 @@
           {
             key: 8,
             label: `年龄`,
-            visible: true
-          },
-          {
-            key: 9,
-            label: `皮肤类型`,
-            visible: true
-          }, {
-            key: 10,
-            label: `过敏史`,
-            visible: true
-          },
-          {
-            key: 11,
-            label: `疾病史`,
             visible: true
           }
         ],
