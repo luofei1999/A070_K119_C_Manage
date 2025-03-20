@@ -103,6 +103,10 @@
     <!-- 添加或修改设备信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+        <el-form-item label="设备分组" prop="groupId">
+          <treeselect v-model="form.groupId" :options="enabledGroupOptions" :show-count="true"
+            placeholder="请选择设备分组" />
+        </el-form-item>
         <el-form-item label="编号" prop="deviceNumber">
           <el-input v-model="form.deviceNumber" placeholder="请输入编号" />
         </el-form-item>
@@ -323,12 +327,21 @@
         groupTreeSelect().then(response => {
           console.log(response.data)
           this.groupOptions = response.data;
+          this.groupOptions.unshift(this.getAllOption())
           this.enabledGroupOptions = this.filterDisabledDevicesGroup(JSON.parse(JSON.stringify(response.data)));
         });
       },
+      // 获取 全部 分级
+      getAllOption() {
+        return {
+          "label": "全部",
+          "id": -1,
+          "disabled": false,
+        }
+      },
       // 过滤禁用的分组
       filterDisabledDevicesGroup(groupList) {
-        return groupList.filter(group => {
+        var list = groupList.filter(group => {
           if (group.disabled) {
             return false;
           }
@@ -337,6 +350,7 @@
           }
           return true;
         });
+        return list
       },
       // 筛选节点
       filterNode(value, data) {
@@ -345,7 +359,11 @@
       },
       // 节点单击事件
       handleNodeClick(data) {
-        this.queryParams.groupId = data.id;
+        if(data.id == -1) {
+          this.$delete(this.queryParams, "groupId")
+        } else {
+          this.queryParams.groupId = data.id;
+        }
         this.handleQuery();
       },
 
