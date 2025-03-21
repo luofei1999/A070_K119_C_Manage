@@ -38,14 +38,6 @@
                     :value="dict.value" />
                 </el-select>
               </el-form-item>
-             <!-- <el-form-item label="用户" prop="userName">
-                <el-input v-model="queryParams.userName" placeholder="请输入用户" clearable
-                  @keyup.enter.native="handleQuery" />
-              </el-form-item> -->
-              <el-form-item label="卡号" prop="simCardNumber">
-                <el-input v-model="queryParams.simCardNumber" placeholder="请输入卡号" clearable
-                  @keyup.enter.native="handleQuery" />
-              </el-form-item>
 
               <el-form-item>
                 <el-button type="primary" icon="el-icon-search" size="mini" @click="handleQuery">搜索</el-button>
@@ -75,23 +67,24 @@
 
             <el-table v-loading="loading" :data="devices_manageList" @selection-change="handleSelectionChange">
               <el-table-column type="selection" width="55" align="center" />
-              <!-- <el-table-column label="调试" align="center" class-name="small-padding">
-                <template slot-scope="scope">
-                  <el-button type="danger" size="mini" @click="debugDevice(scope.row)">调试</el-button>
-                </template>
-              </el-table-column> -->
+
               <el-table-column label="编号" align="center" prop="deviceNumber" />
               <el-table-column label="状态" align="center" prop="status">
                 <template slot-scope="scope">
                   <dict-tag :options="dict.type.device_status" :value="scope.row.status" />
                 </template>
               </el-table-column>
-              <!-- <el-table-column label="用户" align="center" prop="userName" /> -->
-              <el-table-column label="通信时间" align="center" prop="communicationTime" width="180" />
-              <el-table-column label="卡号" align="center" prop="simCardNumber" />
-              <el-table-column label="账号" align="center" prop="account" />
-              <el-table-column label="密码" align="center" prop="password" />
-              <el-table-column label="类型" align="center" prop="type" />
+
+              <el-table-column label="功能1剩余" align="center" prop="function1Balance" />
+              <el-table-column label="功能1调整" align="center" prop="function1Adjustment" />
+
+              <el-table-column label="功能2剩余" align="center" prop="function2Balance" />
+              <el-table-column label="功能2调整" align="center" prop="function2Adjustment" />
+
+              <el-table-column label="功能3剩余" align="center" prop="function3Balance" />
+              <el-table-column label="功能3调整" align="center" prop="function3Adjustment" />
+
+
               <el-table-column label="备注" align="center" prop="remark" />
               <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
                 <template slot-scope="scope">
@@ -112,7 +105,7 @@
     </el-row>
 
     <!-- 添加或修改设备信息对话框 -->
-    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body >
+    <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="设备分组" prop="groupId">
           <treeselect v-model="form.groupId" :options="enabledGroupOptions" :show-count="true" placeholder="请选择设备分组" />
@@ -254,14 +247,14 @@
       this.getList();
       this.getDevicesGroupTree();
     },
-    destroyed() {
-    },
+    destroyed() {},
     methods: {
       /** 查询设备信息列表 */
       getList() {
         this.loading = true;
+
         listDevices_manage(this.queryParams).then(response => {
-          this.devices_manageList = response.rows;
+          this.devices_manageList = response.rows
           this.total = response.total;
           this.loading = false;
         });
@@ -349,7 +342,6 @@
           ids = this.ids
           msg = '是否确认删除选中的数据项？'
         }
-
         this.$modal.confirm(msg).then(function() {
           return delDevices_manage(ids);
         }).then(() => {
