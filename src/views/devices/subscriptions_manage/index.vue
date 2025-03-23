@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="设备编号" prop="deviceNumber">
+      <el-form-item label="设备编号" prop="deviceNumber" label-width="70px">
         <el-input v-model="queryParams.deviceNumber" placeholder="请输入设备编号" clearable
           @keyup.enter.native="handleQuery" />
       </el-form-item>
@@ -57,7 +57,7 @@
           <el-input v-model="form.deviceNumber" placeholder="请输入设备编号" />
         </el-form-item>
         <el-form-item label="订阅时间" prop="subscriptionTime">
-          <el-time-picker v-model="form.subscriptionTime" format="HH:mm:ss" value-format="HH:mm:ss"placeholder="请选择订阅时间">
+          <el-time-picker v-model="form.subscriptionTime" format="HH:mm:ss" value-format="HH:mm:ss" placeholder="请选择订阅时间" :default-value="defaultTime">
           </el-time-picker>
         </el-form-item>
       </el-form>
@@ -77,6 +77,8 @@
     addSubscriptions_manage,
     updateSubscriptions_manage
   } from "@/api/devices/subscriptions_manage";
+
+  import { isMobileDevice } from "@/utils/ruoyi";
 
   export default {
     name: "Subscriptions_manage",
@@ -121,10 +123,14 @@
             message: "订阅时间不能为空",
             trigger: "blur"
           }]
-        }
+        },
+        // 默认订阅时间
+        defaultTime: new Date(new Date().setHours(0, 0, 0, 0)), // 时，分，秒，毫秒
       };
     },
     created() {
+      // 移动端隐藏搜索
+      this.showSearch = !isMobileDevice()
       this.getList();
     },
     methods: {
@@ -171,7 +177,7 @@
       handleAdd() {
         this.reset();
         this.open = true;
-        this.title = "添加订阅管理";
+        this.title = "添加订阅";
       },
       /** 修改按钮操作 */
       handleUpdate(row) {
@@ -180,7 +186,7 @@
         getSubscriptions_manage(id).then(response => {
           this.form = response.data;
           this.open = true;
-          this.title = "修改订阅管理";
+          this.title = "修改订阅";
         });
       },
       /** 提交按钮 */
@@ -206,7 +212,10 @@
       /** 删除按钮操作 */
       handleDelete(row) {
         const ids = row.id || this.ids;
-        this.$modal.confirm('是否确认删除订阅管理编号为"' + ids + '"的数据项？').then(function() {
+
+        var msg = row.id ? '是否确认删除设备编号为"' + row.deviceNumber  + '"的数据项？': "是否删除选中项？"
+
+        this.$modal.confirm(msg).then(function() {
           return delSubscriptions_manage(ids);
         }).then(() => {
           this.getList();

@@ -90,6 +90,7 @@
     <el-table v-loading="loading" :data="treatment_recordList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="用户名" align="center" prop="userName" />
+      <el-table-column label="治疗设备" align="center" prop="treatmentDevice" />
       <el-table-column label="治疗方案" align="center" prop="treatmentPlan">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.treatment_plan" :value="scope.row.treatmentPlan"/>
@@ -108,7 +109,6 @@
       </el-table-column>
       <el-table-column label="治疗能量" align="center" prop="treatmentEnergy" />
       <el-table-column label="总能量输出" align="center" prop="totalEnergyOutput" />
-      <el-table-column label="治疗设备" align="center" prop="treatmentDevice" />
       <el-table-column label="治疗地址" align="center" prop="treatmentLocation" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
