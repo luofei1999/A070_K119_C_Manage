@@ -79,6 +79,9 @@
         <el-form-item label="更新描述" prop="updateDesc">
           <el-input v-model="form.updateDesc" type="textarea" placeholder="请输入内容" />
         </el-form-item>
+        <el-form-item label="MD5" prop="updateDesc">
+          <el-input v-model="form.md5" type="textarea" placeholder="请输入内容" />
+        </el-form-item>
         <el-form-item label="APK" prop="apkUrl">
           <apk-upload :fileSize="200" :fileType="['apk']" v-model="form.apkUrl" />
         </el-form-item>
@@ -132,6 +135,7 @@
           versionName: null,
           updateDesc: null,
           apkUrl: null,
+          md5: null,
         },
         // 更新类型
         updateTypeList: [{
@@ -200,7 +204,8 @@
           updateDesc: null,
           updateType: 1,
           apkUrl: null,
-          createTime: null
+          createTime: null,
+          md5: null,
         };
         this.resetForm("form");
       },

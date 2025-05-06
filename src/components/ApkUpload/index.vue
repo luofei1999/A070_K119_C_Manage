@@ -110,6 +110,9 @@ export default {
       return this.isShowTip && (this.fileType || this.fileSize);
     },
   },
+  created() {
+    console.log("上传：",this.uploadFileUrl)
+  },
   methods: {
     // 上传前校检格式和大小
     handleBeforeUpload(file) {
@@ -151,6 +154,7 @@ export default {
     },
     // 上传成功回调
     handleUploadSuccess(res, file) {
+      console.log("上传成功了")
       if (res.code === 200) {
         this.uploadList.push({ name: res.fileName, url: res.url });
         this.uploadedSuccessfully();
