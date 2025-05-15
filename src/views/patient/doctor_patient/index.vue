@@ -80,6 +80,7 @@
     <el-table v-loading="loading" :data="doctor_patientList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="患者ID" align="center" prop="id" />
+      <el-table-column label="zogniqID" align="center" prop="zogniqId" />
       <el-table-column label="医生ID" align="center" prop="doctorid" />
       <el-table-column label="名称" align="center" prop="patientname" />
       <el-table-column label="出生日期" align="center" prop="birthday" width="180">
@@ -129,6 +130,9 @@
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="医生ID" prop="doctorid">
           <el-input v-model="form.doctorid" placeholder="请输入医生ID" />
+        </el-form-item>
+        <el-form-item label="zogniqID" prop="doctorid">
+          <el-input v-model="form.zogniqId" placeholder="请输入患者ID" />
         </el-form-item>
         <el-form-item label="名称" prop="patientname">
           <el-input v-model="form.patientname" placeholder="请输入名称" />
@@ -256,7 +260,8 @@ export default {
         city: null,
         state: null,
         zipcode: null,
-        email: null
+        email: null,
+        zogniqId: null
       };
       this.resetForm("form");
     },
