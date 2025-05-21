@@ -76,6 +76,8 @@
       <el-table-column label="血氧饱和度" align="center" prop="spo2" />
       <el-table-column label="脉率" align="center" prop="pr" />
       <el-table-column label="血压" align="center" prop="pi" />
+      <el-table-column label="SYS" align="center" prop="sys" />
+      <el-table-column label="DIA" align="center" prop="dia" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -107,8 +109,8 @@
     <!-- 添加或修改血氧仪对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="100px">
-        <el-form-item label="用户ID" prop="uId">
-          <el-input v-model="form.uId" placeholder="请输入患者ID" />
+        <el-form-item label="用户ID" prop="userId">
+          <el-input v-model="form.userId" placeholder="请输入患者ID" />
         </el-form-item>
         <el-form-item label="用户名" prop="userName">
           <el-input v-model="form.userName" placeholder="请输入用户名" />
@@ -119,8 +121,14 @@
         <el-form-item label="脉率" prop="pr">
           <el-input v-model="form.pr" placeholder="请输入脉率" />
         </el-form-item>
-        <el-form-item label="血压" prop="pi">
-          <el-input v-model="form.pi" placeholder="请输入血压" />
+        <el-form-item label="PI" prop="pi">
+          <el-input v-model="form.pi" placeholder="请输入PI" />
+        </el-form-item>
+        <el-form-item label="SYS" prop="dia">
+          <el-input v-model="form.sys" placeholder="请输入PI" />
+        </el-form-item>
+        <el-form-item label="DIA" prop="dia">
+          <el-input v-model="form.dia" placeholder="请输入DIA" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -207,11 +215,13 @@ export default {
     reset() {
       this.form = {
         oximeterId: null,
-        uId: null,
+        userId: null,
         userName: null,
         spo2: null,
         pr: null,
         pi: null,
+        sys: null,
+        dia: null,
         createTime: null
       };
       this.resetForm("form");
